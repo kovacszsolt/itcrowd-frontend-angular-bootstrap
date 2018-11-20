@@ -1,0 +1,5 @@
+<ul class="list-group border border-primary  h-100">
+  <li class="list-group-item active rounded-0">Related Contents</li>
+  <li *ngFor="let tweet of tweets" class="list-group-item"><a
+    href="" [routerLink]="['/',tweet.slug]"> {{tweet.title}}</a></li>
+</ul>
