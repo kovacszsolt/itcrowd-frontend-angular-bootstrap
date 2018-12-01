@@ -15,7 +15,6 @@ export class FrontComponent implements OnInit {
   @HostListener('window:scroll', [])
   onScroll(): void {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      console.log('bootm');
       this.pageNumber++;
       this.getTweetList();
     }
