@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators';
 import {forkJoin, Observable} from 'rxjs';
 import {parse, stringify} from 'flatted/esm';
 import {DataModel} from '../model/data.model';
+import {TweetModel} from '../model/tweet.model';
 
 @Injectable({
   providedIn: 'root'
@@ -81,10 +82,14 @@ export class ServiceRemoteService {
   }
 
 
-  public getServerTweetList() {
+  public getServerTweetList(): Observable<TweetModel[]> {
     return this.http.get<any>('https://backend.itcrowd.hu/twitter/tweet/list').pipe(
       map((response) => {
-          return response.result;
+          const tweetList = [];
+          response.result.forEach((a) => {
+            tweetList.push(new TweetModel(a));
+          });
+          return tweetList;
         }
       )
     );

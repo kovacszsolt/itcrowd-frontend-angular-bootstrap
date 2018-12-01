@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TweetModel} from '../../model/tweet.model';
 
 @Component({
   selector: 'app-list-card',
@@ -6,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./card.component.scss']
 })
 export class ListCardComponent implements OnInit {
-  @Input() item = [];
+  @Input() item = new TweetModel({});
 
   constructor() {
   }

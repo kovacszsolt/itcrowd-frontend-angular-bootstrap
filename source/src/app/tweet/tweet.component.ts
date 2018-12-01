@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ServiceService} from '../service/service.service';
 import {ActivatedRoute} from '@angular/router';
+import {TweetModel} from '../model/tweet.model';
 
 @Component({
   selector: 'app-tweet',
@@ -10,7 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class TweetComponent implements OnInit, OnDestroy {
 
-  public tweet = {};
+  public tweet = new TweetModel({});
 
   public tweetList = [];
 

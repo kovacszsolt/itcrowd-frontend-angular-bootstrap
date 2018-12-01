@@ -1,3 +1,5 @@
+import {TweetModel} from './tweet.model';
+
 export class DataModel {
   public update = [];
   public tweetList = [];
