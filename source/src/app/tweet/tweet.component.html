@@ -1,15 +1,17 @@
-<div class="container">
+<div class="container pt-5">
   <div class="row">
     <div class="col-md-8 pl-0 pr-0">
-      <img class="img-fluid" [alt]="tweet.twitter_content.title" [src]="tweet.twitter_content.imageurl"/>
-      <h1>{{tweet.twitter_content.title}}</h1>
-      <app-card-category [categories]="tweet.twitter_category"></app-card-category>
-      <p> {{tweet.twitter_content.content}}</p>
-      <a class="btn btn-info btn-block " target="_blank" [href]="tweet.twitter_content.url">jump to the article</a>
+      <img class="img-fluid" [alt]="tweet.title"
+           [src]="'https://backend.itcrowd.hu/route/get/image/'+tweet.slug+'/size1.jpg'"/>
+      <h1>{{tweet.title}}</h1>
+      <app-list-category [categoryList]="tweet.twitter_category_full"></app-list-category>
+      <p>{{tweet.content}}</p>
+      <a class="btn btn-info btn-block " target="_blank" href={{tweet.url}}>jump
+        to the
+        article</a>
     </div>
-    <div class="col-md-4 pl-0 pr-0 ">
-      <app-tweetsimple [category_list]="categoryList"></app-tweetsimple>
+    <div class="col-md-4 mt-4">
+      <app-listsimple [itemList]="tweetList"></app-listsimple>
     </div>
   </div>
 </div>
-

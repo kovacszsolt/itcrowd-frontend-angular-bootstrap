@@ -1,1 +1,8 @@
-<app-list></app-list>
+<div class="row">
+  <div class="col-md-10 mt-5">
+    <app-list [itemList]="itemList"></app-list>
+  </div>
+  <div class="col-md-2 mt-5 sidebar d-none d-md-block d-sm-none">
+    <app-list-category [categoryList]="categoryList"></app-list-category>
+  </div>
+</div>

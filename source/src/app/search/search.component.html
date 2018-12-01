@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-12 mt-6 fixed-top form-check form-check-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" [(ngModel)]="searchText"
+           aria-label="Search"/>
+      <label *ngIf="!firstStart" class="form-check-label" >({{tweetList.length}}&nbsp;pcs)</label>
+
+  </div>
+  <div *ngIf="firstStart" class="col-md-12 mt-12 d-flex justify-content-center">
+    <img src="/assets/loading.gif"/>
+  </div>
+  <div *ngIf="!firstStart" class="col-md-12 mt-12">
+    <app-list *ngIf="tweetList.length!==0" [itemList]="tweetList"></app-list>
+    <div *ngIf="tweetList.length===0" class="d-flex justify-content-center">
+      <img src="/assets/oops.jpg"/>
+    </div>
+  </div>
+</div>

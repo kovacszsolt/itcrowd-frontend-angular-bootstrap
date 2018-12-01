@@ -1,6 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {TweetModel} from '../model/tweet.model';
+import {Component, OnInit} from '@angular/core';
+import {ServiceService} from '../service/service.service';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -9,31 +8,24 @@ import {Subscription} from 'rxjs';
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss']
 })
-export class TagComponent implements OnInit, OnDestroy {
+export class TagComponent implements OnInit {
+  public itemList = [];
+  public categoryList = [];
+  private slug = '';
 
-  public tweets = [];
-  private routeSubscription: Subscription;
+  routeSubscription: Subscription;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private serviceService: ServiceService, private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.routeSubscription = this.route.params.subscribe(params => {
-      this.getData(params.slug);
-    });
-  }
-
-  private getData(slug) {
-    this.tweets = [];
-    this.http.get('https://backend.itcrowd.hu/route/get/' + slug).subscribe((result) => {
-      result['result'][0]['twitter_category'].map((tweet) => {
-        this.tweets.push(new TweetModel(tweet));
+    this.routeSubscription = this.activeRoute.params.subscribe(params => {
+      this.serviceService.getTweetsByCategorySlug(params.slug).subscribe((getTweetsResult) => {
+        this.itemList = getTweetsResult;
+      });
+      this.serviceService.getCategory().subscribe((getCategoryResult) => {
+        this.categoryList = getCategoryResult;
       });
     });
   }
-
-  ngOnDestroy() {
-    this.routeSubscription.unsubscribe();
-  }
-
 }

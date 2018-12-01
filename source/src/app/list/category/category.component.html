@@ -1,0 +1,2 @@
+<a *ngFor="let category of categoryList"  class="mr-1 badge badge-success" routerLink="/tag/{{category.slug}}" [title]="category.title" href="">{{category.title}} ({{category.tweets.length}})</a>
+

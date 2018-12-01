@@ -1,0 +1,15 @@
+<div class="card rounded-0  border border-primary ">
+  <a *ngIf="item.twitter_image.length!==0" routerLink="/{{item.slug}}" href="">
+    <img class="card-img-top rounded-0"
+         [src]="'https://backend.itcrowd.hu/route/get/image/'+item.slug+'/size1.jpg'" alt={{item.title}}/>
+  </a>
+  <div class="card-body">
+    <h5 class="card-title"><a routerLink="/{{item.slug}}" href="">{{item.title}}</a></h5>
+    <p>
+      <small class="text-muted">{{item.createdAt}}</small>
+    </p>
+    <app-list-category [categoryList]="item.twitter_category_full"></app-list-category>
+    <p class="card-text">{{item.content}}</p>
+
+  </div>
+</div>

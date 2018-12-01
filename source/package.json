@@ -1,5 +1,5 @@
 {
-  "name": "itcrowd-front-angular",
+  "name": "itcrowd-frontend-angular-bootstrap",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
     "core-js": "^2.5.4",
+    "flatted": "^2.0.0",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },

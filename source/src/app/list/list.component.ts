@@ -1,6 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {TweetModel} from '../model/tweet.model';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -8,22 +6,12 @@ import {TweetModel} from '../model/tweet.model';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  @Input() itemList = [];
 
-  public tweets = [];
-
-  constructor(private http: HttpClient) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.tweets = [];
-    this.getData();
   }
 
-  private getData() {
-    this.http.get('https://backend.itcrowd.hu/twitter/tweet/list').subscribe((result) => {
-      result['result'].map((tweet) => {
-        this.tweets.push(new TweetModel(tweet));
-      });
-    });
-  }
 }

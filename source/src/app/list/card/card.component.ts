@@ -1,18 +1,17 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-card',
+  selector: 'app-list-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
-  @Input() tweet;
+export class ListCardComponent implements OnInit {
+  @Input() item = [];
 
   constructor() {
   }
 
   ngOnInit() {
-
   }
 
 }

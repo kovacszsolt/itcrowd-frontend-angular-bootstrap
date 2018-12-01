@@ -1,13 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-card-category',
+  selector: 'app-list-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CardCategoryComponent implements OnInit {
-
-  @Input() categories = [];
+export class ListCategoryComponent implements OnInit {
+  @Input() categoryList = [];
 
   constructor() {
   }

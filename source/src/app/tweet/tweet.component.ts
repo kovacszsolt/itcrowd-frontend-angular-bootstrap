@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TweetModel} from '../model/tweet.model';
-import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs';
+import {ServiceService} from '../service/service.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -11,29 +10,48 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class TweetComponent implements OnInit, OnDestroy {
 
-  public tweet = new TweetModel();
-  private routeSubscription: Subscription;
-  public categoryList = '';
+  public tweet = {};
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  public tweetList = [];
+
+  routeSubscription: Subscription;
+
+  constructor(private serviceService: ServiceService, private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.routeSubscription = this.route.params.subscribe(params => {
-      this.getData(params.slug);
+    this.routeSubscription = this.activeRoute.params.subscribe(params => {
+      this.serviceService.getTweet(params.slug).subscribe((getTweetResponse) => {
+          this.tweet = getTweetResponse;
+          const categoryIds = getTweetResponse.twitter_category;
+          this.serviceService.getTweetsByCategoryMultiple(categoryIds).subscribe((Result) => {
+            Result = Result.filter(a => a._id !== this.tweet['_id']);
+            Result = Result.sort(this.dynamicSort('title'));
+            this.tweetList = [];
+            Result.forEach((forEachResult) => {
+              if (this.tweetList.filter(tweet => tweet._id === forEachResult._id).length === 0) {
+                this.tweetList.push(forEachResult);
+              }
+            });
+          });
+        }
+      );
     });
   }
 
-  ngOnDestroy() {
+  private dynamicSort(property) {
+    let sortOrder = 1;
+    if (property[0] === '-') {
+      sortOrder = -1;
+      property = property.substr(1);
+    }
+    return function (a, b) {
+      const result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+      return result * sortOrder;
+    };
+  }
+
+  ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
-  }
-
-  private getData(slug) {
-    this.http.get('https://backend.itcrowd.hu/route/get/' + slug).subscribe((result) => {
-      this.tweet = new TweetModel(result['result'][0]['twitter_tweet']);
-      this.categoryList = result['result'][0]['twitter_tweet'].twitter_category.map((a) => {
-        return a.title;
-      }).join(',');
-    });
   }
 }
