@@ -63,7 +63,7 @@ export class ServiceRemoteService {
     if (_return) {
       _return = (Date.now() > Number(parse(localStorage.getItem(this.STORAGE_KEY_UPDATE)).date) + (this.REFRESH_TIME * 1000));
     }
-    return _return;
+    return true;
   }
 
   private getFromServer() {
