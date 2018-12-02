@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {ServiceService} from '../service/service.service';
 import {ActivatedRoute} from '@angular/router';
 import {TweetModel} from '../model/tweet.model';
+import {Meta} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tweet',
@@ -17,13 +18,22 @@ export class TweetComponent implements OnInit, OnDestroy {
 
   routeSubscription: Subscription;
 
-  constructor(private serviceService: ServiceService, private activeRoute: ActivatedRoute) {
+  constructor(private meta: Meta, private serviceService: ServiceService, private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.routeSubscription = this.activeRoute.params.subscribe(params => {
       this.serviceService.getTweet(params.slug).subscribe((getTweetResponse) => {
           this.tweet = getTweetResponse;
+
+          this.meta.addTags([
+            {name: 'author', content: 'itcrowd.hu'},
+            {name: 'description', content: this.tweet.content},
+            {name: 'og:image', content: 'https://backend.itcrowd.hu/route/get/image/' + this.tweet.slug + '/size1.jpg'},
+            {name: 'og:title', content: this.tweet.title},
+            {name: 'og:description', content: this.tweet.content}
+          ]);
+
           const categoryIds = getTweetResponse.twitter_category;
           this.serviceService.getTweetsByCategoryMultiple(categoryIds).subscribe((Result) => {
             Result = Result.filter(a => a._id !== this.tweet['_id']);
