@@ -25,6 +25,7 @@ export class FrontComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.serviceService.getCategory().subscribe((getCategoryResult) => {
       this.categoryList = getCategoryResult;
     });

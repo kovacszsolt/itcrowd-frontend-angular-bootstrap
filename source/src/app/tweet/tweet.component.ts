@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {ServiceService} from '../service/service.service';
 import {ActivatedRoute} from '@angular/router';
 import {TweetModel} from '../model/tweet.model';
-import {Meta} from '@angular/platform-browser';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tweet',
@@ -18,14 +18,14 @@ export class TweetComponent implements OnInit, OnDestroy {
 
   routeSubscription: Subscription;
 
-  constructor(private meta: Meta, private serviceService: ServiceService, private activeRoute: ActivatedRoute) {
+  constructor(private meta: Meta, private serviceService: ServiceService, private activeRoute: ActivatedRoute, private title: Title) {
   }
 
   ngOnInit() {
     this.routeSubscription = this.activeRoute.params.subscribe(params => {
       this.serviceService.getTweet(params.slug).subscribe((getTweetResponse) => {
           this.tweet = getTweetResponse;
-
+          this.title.setTitle(this.tweet.title);
           this.meta.addTags([
             {name: 'author', content: 'itcrowd.hu'},
             {name: 'description', content: this.tweet.content},
